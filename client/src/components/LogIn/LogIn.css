@@ -1,0 +1,59 @@
+.login-container {
+    display: grid;
+    height: 80vh;
+    justify-items: center;
+}
+
+.nested-login-container {
+    margin-top: 5vh;
+    display: grid;
+    row-gap: 6vh;
+    justify-items: center;
+    background-color: white ;
+    border-radius: 10%;
+    width: 40vw;
+    padding-bottom: 20vh ;
+    padding-top: 5vh;
+}
+
+.input-login {
+    width: 30vw;
+    padding-left: 1vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    height: 5vh;
+    font-size: 1vw;
+    border: 1px solid gainsboro;
+}
+
+.btn-login {
+    width: 20vw;
+    background-color: #FDC886;
+    border: none;
+    border-radius: 1vw;
+    height: 6vh;
+    font-size: 2vw;
+    cursor: pointer;
+    
+}
+
+.btn-login-container {
+    width: 100%
+}
+
+.sign-in-txt-container{
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding-top: 1vh;
+    
+}
+
+.sing-in-txt {
+    cursor: pointer;
+}
+
+.login-title {
+    font-size: 8vh;
+    margin-top: 4vh;
+}

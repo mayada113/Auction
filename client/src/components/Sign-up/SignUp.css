@@ -1,0 +1,67 @@
+.sign-up-container {
+    display: grid;
+    justify-content: center;
+}
+
+.nested-grid-signup {
+    margin-top: 5vh;
+    display: grid;
+    row-gap: 4vh;
+    background-color: white;
+    justify-content: center;
+    align-content: flex-start;
+    width: 40vw;
+    height: 60vh;
+    border-radius: 10%;
+    padding-top: 10%;
+}
+
+.first-last-name {
+    width: 20%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1vw;
+}
+
+.sign-up-title {
+    font-size: 4vw;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-sign-up {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-signup {
+    width: 50%;
+    margin-top: 2vh;
+    width: 20vw;
+    background-color: #FDC886;
+    border: none;
+    border-radius: 1vw;
+    height: 6vh;
+    font-size: 1vw;
+    cursor: pointer;
+}
+
+.signup-title {
+    margin-bottom: 5vh;
+}
+
+.input {
+    padding-left: 1vw;   
+    width: 30vw;
+    border: 1px solid gainsboro;
+    height: 5vh;
+    font-size: 1vw;
+}
+
+.input-firstName , .input-lastName {
+    width:13.8vw;
+    padding-left: 1vw;
+    border: 1px solid gainsboro;
+    height: 5vh;
+    font-size: 1vw;
+}

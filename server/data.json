@@ -1,0 +1,44 @@
+[
+    {
+        "title" : "Iphone",
+    "category" : "Cell Phones",
+    "image" : "String", 
+    "price" : 50,
+    "available" : true,
+    "dateOfApprove" : "10/10/22",
+    "isApproved" : true,
+    "description" : "phone ring ring"
+},
+{
+    "title" : "Toyota",
+"category" : "Cars",
+"image" : "String", 
+"price" : 150,
+"available" : true,
+"dateOfApprove" : "20/10/22",
+"isApproved" : true,
+"description" : "car vrom vrom"
+},
+{
+    "title" : "NoteBook",
+"category" : "Books",
+"image" : "String", 
+"price" : 5,
+"available" : true,
+"dateOfApprove" : "10/10/22",
+"isApproved" : true,
+"description" : "read read"
+},
+
+{
+    "title" : "T-shirt",
+"category" : "Clothing",
+"image" : "String", 
+"price" : 50,
+"available" : true,
+"dateOfApprove" : "10/10/22",
+"isApproved" : true,
+"description" : "clothing"
+}
+
+]

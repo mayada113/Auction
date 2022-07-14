@@ -1,0 +1,31 @@
+.add-item-container {
+    margin-top: 4vh;
+    margin-left: 4vh;
+}
+
+.add-item-grid {
+    display: grid;
+    row-gap: 8vh;
+    justify-content: center;
+}
+
+.title-add-item , .category-add-item , .description-add-item , .upload-image-add-item{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.btn-add-item-div {
+    display: flex;
+    justify-content: center;
+    
+}
+
+.title-add-item-text {
+    display: grid;
+    justify-items: center;
+    font-size: xxx-large;
+}
+
+.input-add-item {
+    border: 1px solid gainsboro;
+}

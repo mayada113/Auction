@@ -1,0 +1,7 @@
+.search-bar {
+    margin-top: 4vh;
+    display: flex;
+}
+.btn-search{
+    background-color: blueviolet;
+}

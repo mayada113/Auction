@@ -1,0 +1,19 @@
+.side-bar {
+    color: white;
+    margin-left: 2vw;
+    margin-top: 2vw;
+    
+}
+
+.category {
+    margin-top: 2vh;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+   
+}
+
+.category:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}

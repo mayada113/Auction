@@ -1,0 +1,32 @@
+body {
+    background-color:#F5F2EA ;
+}
+
+.inner-grid{
+  display: grid;
+  grid-template-columns: 20vw 70vw;
+  margin-top: 5vh;
+ 
+ 
+} 
+
+.side-bar-container {
+    background-color: #30383f;
+    height: 70vh;
+    border-radius: 2%;
+}
+
+.Items {
+    margin-left: 4vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 4vw;
+    row-gap: 8vh;
+    width: 100%;
+    margin-bottom: 4vh;
+}
+
+
+.container-main-page {
+    margin-left: 2vw;
+}

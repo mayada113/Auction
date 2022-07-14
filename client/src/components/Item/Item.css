@@ -1,0 +1,40 @@
+.item {
+    display: grid;
+    color: inherit;
+    justify-items: center;
+    row-gap: 2vh;
+    border-radius: 3%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.15);
+}
+
+.item:hover {
+    background-color: rgba(0, 0, 0, 0.1)
+}
+
+.image-item {
+    width: 15vw;
+    height: 20vh;
+
+}
+
+.item-title {
+    font-size: x-large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-bottom: 2vh;
+}
+
+.current-bid-div {
+    font-size: large;
+}
+
+.current-bid-vlaue {
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.time-left-value {
+    font-family: Arial, Helvetica, sans-serif;
+    color: red;
+}
