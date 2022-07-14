@@ -1,26 +1,25 @@
 const express = require(`express`);
 const router = express.Router();
 const Item = require(`../models/Item`);
-const moment = require("moment");
+const moment = require("moment")
 const data = require("../../data.json");
 const { body, validationResult } = require("express-validator");
 
 router.get(`/items`, function (request, response) {
   let categoryName = request.query.category;
-  let filter = categoryName ? { category: categoryName } : {};
-  Item.find(filter)
-    .sort({ dateOfExpire: 1 })
-    .exec(function (err, items) {
-      if (err) {
-        response.status(500).send(err);
-        return;
-      } else if (!items) {
-        response.status(404).send("No Results");
-        return;
-      }
-      response.send(items);
-    });
-});
+  let filter = categoryName ? { category: categoryName } : {}
+  Item.find(filter).sort({ dateOfExpire: 1 }).exec(function (err, items) {
+    if (err) {
+      response.status(500).send(err);
+      return;
+    } else if (!items) {
+      response.status(404).send("No Results");
+      return;
+    }
+    response.send(items);
+  })
+}
+);
 
 router.delete(`/item`, function (request, response) {
   response.send(`delete item`);
@@ -57,22 +56,36 @@ router.post(
 router.get(`/bid`, function (request, response) {
   const itemId = request.query.itemId;
 
-  response.send("new bid was added");
-});
+  response.send("new bid was added")
+})
 
-router.post(
-  `/bid`,
-  body("bid").isNumeric({ no_symbols: true }),
-  function (request, response) {
-    const errors = validationResult(request);
-    if (errors.isEmpty()) {
-      const bidData = request.body.bidValue;
-      response.send("new bid was added");
-      request.io.to(request.body.itemRoom).emit("biding", bidData);
-    } else {
-      response.status(400).send(errors);
+router.post(`/bid`, body("bidValue").isNumeric({ no_symbols: true }), function (request, response) {
+  const errors = validationResult(request);
+  if (errors.isEmpty()) {
+    const bidData = request.body
+    const value = {
+      user: bidData.userId,
+      bidAmount: bidData.bidValue
     }
+    Item.findByIdAndUpdate(bidData.itemRoom, {
+      $push: { bids: value }
+    }, function (err, item) {
+      if (err) {
+        response.status(404).send({ message: "404 not found", err: error })
+      }
+      else {
+        console.log(item);
+        response.send({ message: "bids updated", item: item })
+        //request.io.to(request.body.itemRoom).emit("biding", bidData)
+      }
+    });
+    console.log(bidData);
+  } else {
+    response.status(400).send(errors);
   }
-);
+})
+
+  
 
 module.exports = router;
+

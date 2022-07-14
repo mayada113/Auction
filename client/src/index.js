@@ -12,7 +12,7 @@ const ItemsStore = new itemsStore()
 
 const stores = {
   AuthStore,
-  ItemsStore
+  ItemsStore,
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

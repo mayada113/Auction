@@ -12,8 +12,7 @@ const verifyJWT = (req, res, next) => {
         if (err) {
             return res.status(403).send({ auth: false, msg: "forbidden" });
         }
-        req.username = decoded.userInfo.username
-        req.roles=decoded.userInfo.roles
+        req.username = decoded.username
         console.log(req.username)
         console.log (req.roles)
         next();

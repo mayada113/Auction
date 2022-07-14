@@ -13,7 +13,7 @@ const itemSchema = new Schema({
   description: String,
  // Users: [{ type: Schema.Types.ObjectId, ref: `User` }],
   bids: [{
-    type: Schema.Types.ObjectId, ref: `User`,
+    user:{type: Schema.Types.ObjectId, ref: `User`},
     bidAmount: {
       type: Number,
       unique: true

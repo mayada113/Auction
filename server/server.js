@@ -43,15 +43,13 @@ app.use((req, res, next) => {
 
 
 app.use(`/`, api);
-// app.use(verifyJWT)
+//app.use(verifyJWT)
 app.use(`/`, itemApi);
 app.use(`/`, UserAPI);
 
 io.on("connection", (socket) =>{
-    console.log(socket.id);
     socket.on("join-room", room =>{
       socket.join(room)
-      console.log(room);
     })
 
     socket.on("disconnect", ()=>{
@@ -59,6 +57,7 @@ io.on("connection", (socket) =>{
     })
 })
 
+//console.log(mongoose.Types.ObjectId.isValid("62c44e087a97xb6a62d43cf4"))
 
 
 server.listen(port , function () {

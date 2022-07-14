@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {useNavigate,Link,useLocation } from "react-router-dom";
+import {useNavigate,useLocation } from "react-router-dom";
 import { observer, inject } from 'mobx-react'
 import "./LogIn.css";
 

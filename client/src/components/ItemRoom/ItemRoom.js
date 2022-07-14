@@ -1,95 +1,89 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./ItemRoom.css";
 import Button from "@mui/material/Button";
 import AlarmIcon from "@mui/icons-material/Alarm";
 import TextField from "@mui/material/TextField";
-import { useLocation } from "react-router-dom";
-import socket from "../../socketManager/socketManager";
+import { useLocation } from 'react-router-dom';
 import axios from "axios";
-import { inject } from "mobx-react";
+import { calculateTimer } from '../../Timer/Timer';
+import { inject } from 'mobx-react';
+import io from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function ItemRoom(props) {
-  const [timer, setTimer] = useState(() => calculateTimer());
-  const [item, setItem] = useState(useLocation().state);
-  const [bidInput, setBidInput] = useState("");
-  const [bid, setBid] = useState(0);
+const socket = io.connect("http://localhost:4000")
 
-  console.log(item);
+const user12 = {
+  "_id": "62c44e087a974b6a62d43cf4",
+  "password": "$2b$10$jhlS1IsVEoxbAKp3jqp0yemnVKAuqGubQG.isQU2AQ8FMfkUoVXGm",
+  "firstName": "khaled",
+  "lastName": "wani",
+  "email": "khaled@gmail.com",
+  "Items": [],
+  "historyItem": [],
+  "__v": 0
+}
+
+function ItemRoom(props) {
+  const item = useRef(useLocation().state)
+  const [timer, setTimer] = useState(() => calculateTimer(
+    new Date(item.current.dateOfExpire).getTime() - new Date().getTime()))
+  const [bidInput, setBidInput] = useState("")
+  const [bid, setBid] = useState(null)
+
   useEffect(() => {
-    socket.joinRoom(item.id);
+    socket.emit("join-room", item.current._id)
     const myTimer = setInterval(() => {
-      setTimer(calculateTimer);
+      setTimer(calculateTimer(new Date(item.current.dateOfExpire).getTime() - new Date().getTime()))
     }, 1000);
 
     return () => {
-      clearInterval(myTimer);
-    };
-  }, []);
+      clearInterval(myTimer)
+    }
 
-  function calculateTimer() {
-    let dateOfExpire = new Date("Jul 7, 2022 7:30 PM").getTime();
-    let now = new Date().getTime();
-    let minute = 1000 * 60;
-    let hour = minute * 60;
-    let day = hour * 24;
-    let gap = dateOfExpire - now;
-    let hours = Math.floor((gap % day) / hour);
-    let minutes = Math.floor((gap % hour) / minute);
-    let secs = Math.floor((gap % minute) / 1000);
-    hours = hours < 10 ? "0" + hours : "" + hours;
-    minutes = minutes < 10 ? "0" + minutes : "" + minutes;
-    secs = secs < 10 ? "0" + secs : "" + secs;
-    return {
-      hr: hours,
-      min: minutes,
-      sec: secs,
-    };
-  }
+  }, [])
 
   function bidHandler(e) {
-    setBidInput(e.target.value);
+    setBidInput(e.target.value)
   }
 
-  socket.socket.on("biding", (biddata) => {
-    setBid(biddata);
-  });
+  socket.on("biding", biddata => {
+    setBid(biddata)
+  })
 
   function addBid() {
-    if (bidInput.trim() !== "") {
-      axios
-        .post(`http://localhost:4000/bid`, {
+    if (bidInput.trim() !== "" && bidInput.trim() > item.current.price) {
+      axios.post(`http://localhost:4000/bid`,
+        {
           bidValue: parseInt(bidInput),
-          itemRoom: item.id,
-        })
-        .then((data) => {
-          console.log(data);
+          itemRoom: item.current._id,
+          userId: user12._id,
+          email: user12.email
+        }
+      )
+        .then(data => {
+          console.log(data)
         })
         .catch((error) =>
           toast.error(
             error.response.data.errors[0].param +
-              " " +
-              error.response.data.errors[0].msg
+            " " +
+            error.response.data.errors[0].msg
           )
         );
     }
   }
 
   return (
+
     <div className="room">
       <div className="item-details-container">
         <div className="item-details">
-          <div className="item-title font-effect-outline">{item.title}</div>
-          <div className="timer">
-            Time Left:{" "}
-            <span className="timer-time">
-              {timer.hr}:{timer.min}:{timer.sec}
-            </span>
-          </div>
-          <img src={item.imageURL} alt="" className="image-item-room" />
-          <p>{item.description}</p>
-          <div>Current bid : {item.price}</div>
+          <div className="item-title font-effect-outline">{item.current.title}</div>
+          <div className="timer">Time Left: <span className="timer-time">{timer.hr}:{timer.min}:{timer.sec}</span></div>
+          <img src={item.current.imageURL} alt="" className="image-item-room" />
+          <p>{item.current.description}</p>
+          <div>Current bid : {item.current.price}</div>
           <ToastContainer
             position="top-center"
             autoClose={false}
@@ -99,7 +93,6 @@ function ItemRoom(props) {
             pauseOnFocusLoss
             draggable
           />
-
           <div className="btn-input-bid-container">
             <TextField
               id="outlined-basic"
@@ -144,4 +137,5 @@ function ItemRoom(props) {
   );
 }
 
-export default inject("ItemsStore")(ItemRoom);
+
+export default inject("AuthStore")(ItemRoom)
