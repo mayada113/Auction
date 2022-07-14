@@ -47,8 +47,8 @@ function ItemRoom(props) {
     setBidInput(e.target.value)
   }
 
-  socket.on("biding", biddata => {
-    setBid(biddata)
+  socket.on("biding", bidData => {
+    console.log(bidData)
   })
 
   function addBid() {

@@ -4,6 +4,7 @@ const jwt = require(`jsonwebtoken`);
 require("dotenv").config();
 const bcrypt = require(`bcrypt`);
 const User = require(`../models/User`);
+const { body, validationResult } = require("express-validator");
 
 router.get(`/categories`, function (request, response) {
     response.send(`get categories`)

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import './Navbar.css'
 import AccountMenu from '../AccountMenu/AccountMenu'
-import { useEffect } from 'react';
+
 
 
 
@@ -17,8 +17,6 @@ function Navbar() {
     console.log(e.target.value)
     setAnchorEl(null);
   };
-
-
 
   return (
     <div className='nav-bar'>
