@@ -18,7 +18,7 @@ function Item(props) {
   }
 
   return (
-    <Link className="item" to="/biding-room" state={item}>
+    <Link className="item" to="/biding-room" state={item._id}>
       <div className="item-title">{props.item.title}</div>
       <img src={props.item.imageURL} alt='' className="image-item" />
       <div>Time Left :
@@ -32,11 +32,5 @@ function Item(props) {
   );
 }
 
-// <Item
-//         itemTitle="iphone 13"
-//         itemPrice={5}  
-//         itemTimer="2:01:00"
-//         itemImg="https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone-13-01.jpg"
-//       />
 
 export default Item;

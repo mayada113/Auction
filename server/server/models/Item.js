@@ -8,16 +8,13 @@ const itemSchema = new Schema({
   price: Number,
   available: Boolean,
   dateOfApprove: Date,
+  isSold:Boolean,
   dateOfExpire: Date,
   isApproved: Boolean,
   description: String,
- // Users: [{ type: Schema.Types.ObjectId, ref: `User` }],
   bids: [{
-    user:{type: Schema.Types.ObjectId, ref: `User`},
-    bidAmount: {
-      type: Number,
-      unique: true
-    }
+    user:String,
+    bidAmount: Number,
   }]
 })
 

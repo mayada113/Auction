@@ -36,11 +36,11 @@ const io = new Server(server, {
   },
 });
 
+
 app.use((req, res, next) => {
   req.io = io;
   return next();
 });
-
 
 app.use(`/`, api);
 //app.use(verifyJWT)
@@ -48,17 +48,29 @@ app.use(`/`, itemApi);
 app.use(`/`, UserAPI);
 
 io.on("connection", (socket) =>{
+    console.log("user is now in"+socket.id);
     socket.on("join-room", room =>{
+      console.log(room);
       socket.join(room)
+      console.log(socket.rooms);
     })
 
+
+    socket.on("leave-room", room =>{
+      socket.leave(room)
+      console.log("Bye~");
+    })
+    
     socket.on("disconnect", ()=>{
        console.log("user disconnected" + socket.id);
+       socket.disconnect()
+  
     })
 })
 
-//console.log(mongoose.Types.ObjectId.isValid("62c44e087a97xb6a62d43cf4"))
 
+
+//console.log(mongoose.Types.ObjectId.isValid("62c44e087a97xb6a62d43cf4"))
 
 server.listen(port , function () {
     console.log(`Server running on port ${port}`)

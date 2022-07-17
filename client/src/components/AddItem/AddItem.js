@@ -53,7 +53,9 @@ function AddItem() {
             .catch((error) => console.log(error));
         })
         .catch((error) => console.log(error));
-    } else { alert(`Please fill whole rows`) }
+    } else { 
+      toast.error('please fill all the feilds');
+    }
   }
 
   return (
