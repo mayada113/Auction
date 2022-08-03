@@ -46,16 +46,23 @@ router.post(
     }
   );
 
+  router.put (`/uploadImage` , function ( request, response ) {
+    const userID = request.body.id
+    const imageURL = request.body.imageURl
+    User.findOneAndUpdate({"_id" : userID} , {"profileImageURL" : imageURL}
+    )
+} )
 
 router.post(`/login`, async function (request, response) {
     const username = request.body.username;
     const password = request.body.password;
-
+    
     User.findOne(
         {
             email: username,
         },
         async function (error, user) {
+            console.log(user);
             try {
                 if (error) {
                     response.status(500).send({ auth: false, err: error });
@@ -66,14 +73,14 @@ router.post(`/login`, async function (request, response) {
                 }
 
                 if (await bcrypt.compare(password, user.password)) {
-                    
+                  console.log(user);
                     const token = jwt.sign(
                         {username},
                         process.env.SECRET_KEY,
-                        { expiresIn: '60s', }
+                        { expiresIn: 3600000, }
                     );
                     user.password=""
-                    response.cookie('jwt', token, { httpOnly: true, maxAge: 30 * 1000 })
+                    response.cookie('jwt', token, { httpOnly: true, maxAge: 3600000  })
                     response.send({ auth: true ,user})
                     return;
                 } else {

@@ -12,7 +12,7 @@ function SignUp() {
   const  signUp = async () => {
     if (validator.isEmail(values[`email`].trim())) {
       try {
-        const user = await axios.post(`http://localhost:${port}/user` , values)
+        const user = await axios.post(`http://localhost:${port}/signup` , values)
         console.log(user.data)
         
       } catch (error) {

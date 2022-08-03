@@ -8,6 +8,7 @@ import LogIn from "../LogIn/LogIn";
 import ItemRoom from "../ItemRoom/ItemRoom";
 import SignUp from "../Sign-up/SignUp";
 import RequireAuth from "../RequireAuth/RequireAuth";
+import Profile from "../Profile/Profile.";
 function Container() {
   return (
     <div className="Container">
@@ -16,12 +17,12 @@ function Container() {
         <Routes>
           {/* <Route path="/" element={<LogIn />} /> */}
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route element={<RequireAuth/>} > */}
-            {/* <Route path="/mainPage" element={<MainPage />} /> */}
+          {/* <Route element={<RequireAuth />} > */}
+            <Route path="/" element={<MainPage />} />
             <Route path="/additem" element={<AddItem />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/biding-room" element={<ItemRoom />} />
           {/* </Route> */}
-          <Route path="/" element={<MainPage />} />
-          <Route path="/biding-room" element={<ItemRoom />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -17,9 +17,8 @@ function LogIn(props) {
         password: password,
       })
       .then((response) => { 
-        console.log(response.data);
-          props.AuthStore.setLogInStatus(response.data.auth,response.data.user);
-         
+          console.log(response.data);
+          props.AuthStore.setLogInStatus(response.data.auth,response.data.user); 
           if(props.AuthStore.auth) {navigate(from,{replace:true})} 
            
       });

@@ -95,3 +95,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.bid-text-end{
+    color:red;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    
+}

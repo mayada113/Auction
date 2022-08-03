@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 import { calculateTimer } from '../../Timer/Timer';
-import { inject} from 'mobx-react';
+import { inject } from 'mobx-react';
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,34 +24,44 @@ const user12 = {
 
 function ItemRoom(props) {
 
-  const itemId= useRef(useLocation().state);
+  const itemId = useRef(useLocation().state.id);
+  const enddate = useRef(useLocation().state.date);
   const [item, setItem] = useState(null)
-  const timeLeft =useRef(new Date("Jul 18, 2022 5:45 AM"/*item.dateOfExpire*/).getTime() - new Date().getTime())
+   const timeLeft = useRef(new Date(useLocation().state.date).getTime() - new Date().getTime())
   const myTimer = useRef(null)
-  const [timer, setTimer] = useState(() => calculateTimer(timeLeft.current))
+  const [timer, setTimer] = useState(timeLeft.current)
   const [bidInput, setBidInput] = useState("")
+  const [bidStatus, setBidStatus] = useState(
+    {
+      isBid: true,
+      finalMessage: "this bidding on this item ended",
+    }
+  )
 
   useEffect(() => {
-     myTimer.current = setInterval(() => {
-       timeLeft.current=new Date("Jul 18, 2022 5:45 AM"/*item.dateOfExpire*/).getTime() - new Date().getTime()
-      if(timeLeft.current > 0){
-        setTimer(calculateTimer(timeLeft.current))
-      }else{
-        
-      }
-    }, 1000);
 
-    return () => {
-      clearInterval(myTimer)
-      props.ItemsStore.socket.emit("leave-room", itemId.current)
+    const fetchItem = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/item?id=${itemId.current}`)
+        checktime(res.data.item) 
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    fetchItem()
 
   }, [])
-  
+
   useEffect(() => {
-      props.ItemsStore.socket.emit("join-room", itemId.current)
-      props.ItemsStore.socket.on("bidding", bidData => {
-       setItem(bidData.item)
+    
+    myTimer.current = setInterval(TimeSlots, 1000);
+
+    props.ItemsStore.socket.emit("join-room", itemId.current)
+
+    props.ItemsStore.socket.on("bidding", bidData => {
+    checktime(bidData.item)  
+    
       // toast.success(msg, {
       //   // autoClose: 2000,
       // });
@@ -60,32 +70,42 @@ function ItemRoom(props) {
 
     })
 
+    return () => {
+      clearInterval(myTimer.current)
+      props.ItemsStore.socket.emit("leave-room", itemId.current)
+    }
+
   }, [props.ItemsStore.socket])
 
-  useEffect(() => {
-   
-    const fetchItem = async () => {
-      try {
-        const res = await axios.get(`http://localhost:4000/item?id=${itemId.current}`)
-        console.log(res);
-        setItem(res.data)
-       
-      } catch (error) {
-        console.log(error);
-      }
+  function TimeSlots() {
+    timeLeft.current = new Date(enddate.current).getTime() - new Date().getTime()
+    
+    if (timeLeft.current > 0) {
+      setTimer(calculateTimer(timeLeft.current))
+    } else {
+      setBidStatus({ isBid: false, finalMessage: "this bidding on this item ended" })
+      toast.success("this bidding on this item ended", {
+        autoClose: 3000,
+      });
+      clearInterval(myTimer.current)
     }
-    fetchItem()
-  }, [props.ItemsStore.load])
-
+  }
 
   function bidHandler(e) {
     setBidInput(e.target.value)
   }
 
-  function unMounting(){
-  
-  }
 
+  function checktime(item) {
+    const newBidingStatus= JSON.parse(JSON.stringify(bidStatus));
+    if (timeLeft.current <= 0 && !item.available) {
+      clearInterval(myTimer.current)
+      newBidingStatus.isBid=false
+      setBidStatus(newBidingStatus)
+    }
+    setItem(item)
+  }
+    
 
   async function addBid() {
     try {
@@ -124,9 +144,10 @@ function ItemRoom(props) {
   }
 
   return (
-    item &&<div className="room">
-       <div className="item-details-container">
+    item && <div className="room">
+      <div className="item-details-container">
         <div className="item-details">
+          {!bidStatus.isBid ? <div className="bid-text-end">{bidStatus.finalMessage}</div> : null}
           <div className="item-title font-effect-outline">{item.title}</div>
           <div className="timer">Time Left: <span className="timer-time">{timer.hr}:{timer.min}:{timer.sec}</span></div>
           <img src={item.imageURL} alt="" className="image-item-room" />

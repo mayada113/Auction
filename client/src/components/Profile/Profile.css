@@ -1,0 +1,39 @@
+.profile-image {
+    display: flex;  
+    justify-content: center;
+    margin-top: 5vh;
+}
+
+.first-last-name-profile {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+    font-size: x-large;
+}
+
+.black-line {
+    height: 2px;
+    background-color:#30383f ;
+    margin-top: 3vh;
+}
+
+.profile-image-avatar:hover{
+    background-color: rgba(0, 0, 0, 0.5) ;
+    cursor: pointer;
+}
+
+.custom-file-input {
+    display: flex;
+    justify-content: center;
+}
+.btn-update-profile {
+    display: flex;
+    justify-content: center;
+    margin-top: 4vh;
+}
+
+.email-profile {
+    display: flex;
+    justify-content: center;
+    margin-top: 4vh;
+}

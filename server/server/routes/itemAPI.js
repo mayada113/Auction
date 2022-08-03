@@ -44,23 +44,26 @@ router.get(`/item`, function (request, response) {
         return;
       }
       if (validateTime(item)) {
+          
           return response.send(
             { 
               message: "Item is no longer available for bid",
               item: item
             })
       }
-      response.send(item);
+      response.send( { 
+        message: "ok",
+        item: item
+      });
     })
   } else {
     response.status(400).send("bad request");
-
+    
   }
 });
 
 router.post(
   `/item`,
-  body("title").isAlphanumeric(),
   body("price").isNumeric({ no_symbols: true }),
 
   function (request, response) {
